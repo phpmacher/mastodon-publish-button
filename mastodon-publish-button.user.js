@@ -3,7 +3,7 @@
 // @namespace    https://github.com/phpmacher/mastodon-publish-button/
 // @downloadURL  https://github.com/phpmacher/mastodon-publish-button/mastodon-publish-button.user.js
 // @updateURL    https://github.com/phpmacher/mastodon-publish-button/mastodon-publish-button.user.js
-// @version      0.1
+// @version      0.2
 // @description  rename publish button back to trööt (or toot or to whatever)
 // @author       @phpmacher@sueden.social
 // @match        https://sueden.social/*
@@ -16,12 +16,32 @@
 (function() {
     'use strict';
 
-    window.addEventListener('load', function() {
-
+    function setButton(container) {
         // Edit this variable to change the text of the publish-button
         var buttonText = 'Tröt!';
 
-        document.querySelector(".compose-form__publish-button-wrapper .button.button--block").innerHTML = buttonText;
+        if (container.innerHTML != buttonText) {
+            container.innerHTML = buttonText;
+        }
+    }
+
+    window.addEventListener('load', function() {
+
+        var container = document.querySelector(".compose-form__publish-button-wrapper .button.button--block");
+
+        // initial renaming
+        setButton(container);
+
+        // monitor the button
+        var dom_observer = new MutationObserver(function(mutation) {
+            // if change is detected, set button-name again
+            setButton(container);
+        });
+
+        // config observer and start it
+        var config = { attributes: false, childList: false, characterData: true, subtree: true};
+        dom_observer.observe(container, config);
+
     }, false);
 
 })();
