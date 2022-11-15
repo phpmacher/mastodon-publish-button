@@ -6,6 +6,7 @@
 // @version      0.2
 // @description  rename publish button back to trööt (or toot or to whatever)
 // @author       @phpmacher@sueden.social
+// @license      MIT
 // @match        https://sueden.social/*
 // @match        https://chaos.social/*
 // @match        https://mastodon.social/*
